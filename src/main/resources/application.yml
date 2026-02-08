@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: todo-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/todo_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+      cache-null-values: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      connect-timeout: 2000ms
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info
+
+
+logging:
+  level:
+    com.example.todo: DEBUG
+    org.springframework.cache: TRACE
+    org.springframework.data.redis: DEBUG
